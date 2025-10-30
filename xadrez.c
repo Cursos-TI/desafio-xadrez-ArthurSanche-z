@@ -1,32 +1,64 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-// Desafio de Xadrez - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
-// O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
+int main(void) {
 
-int main() {
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
+    //  1. Movimento da Torre (Usando 'for') 
 
-    // Implementação de Movimentação do Bispo
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
+    // A estrutura 'for' é ideal aqui, pois sabemos exatamente
+    // o número de repetições (5 casas).
+    // O 'for' inicializa, testa a condição e incrementa em uma única linha.
+    int casas_torre = 5;
+    printf(" Movimento da Torre (%d casas para Direita) \n", casas_torre);
 
-    // Implementação de Movimentação da Torre
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Torre para a direita.
+    // i = 1: Inicializa o contador (passo 1)
+    // i <= casas_torre: Condição (executa enquanto 'i' for menor ou igual a 5)
+    // i++: Incremento (move para o próximo passo)
+    for (int i = 1; i <= casas_torre; i++) {
+        // Imprime a direção a cada passo
+        printf("Passo %d: Direita\n", i);
+    }
 
-    // Implementação de Movimentação da Rainha
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Rainha para a esquerda.
 
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
+    //  2. Movimento do Bispo (Usando 'while') 
 
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
+    // A estrutura 'while' testa a condição ANTES de executar o bloco.
+    // É ótima para quando o número de passos é conhecido, mas
+    // queremos controlar o contador externamente.
+    int casas_bispo = 5;
+    int passo_bispo = 1; // O contador deve ser inicializado fora do loop.
 
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
+    printf("\n Movimento do Bispo (%d casas na Diagonal Cima-Direita) \n", casas_bispo);
 
-    return 0;
+    // Testa a condição: "enquanto o passo atual for menor ou igual a 5"
+    while (passo_bispo <= casas_bispo) {
+        // Imprime a combinação de duas direções
+        printf("Passo %d: Cima, Direita\n", passo_bispo);
+        
+        // O incremento deve ser feito manualmente dentro do loop.
+        // Se esquecermos esta linha, teremos um loop infinito!
+        passo_bispo++;
+    }
+
+
+    //  3. Movimento da Rainha (Usando 'do-while') 
+
+    // A estrutura 'do-while' executa o bloco de código PELO MENOS UMA VEZ
+    // e só testa a condição no FINAL.
+    int casas_rainha = 8;
+    int passo_rainha = 1; // Inicializa o contador
+
+    printf("\n Movimento da Rainha (%d casas para Esquerda) \n", casas_rainha);
+
+    do {
+        // Este bloco é executado primeiro (para o passo 1)
+        printf("Passo %d: Esquerda\n", passo_rainha);
+        
+        // Incrementa o contador
+        passo_rainha++;
+
+    } while (passo_rainha <= casas_rainha); // A condição é testada no final.
+    // O loop continuará enquanto a condição for verdadeira.
+
+    return 0; // Indica que o programa terminou com sucesso
 }
