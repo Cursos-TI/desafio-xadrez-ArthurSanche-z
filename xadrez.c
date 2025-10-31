@@ -1,64 +1,159 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+//  1. Protótipos das Funções Recursivas 
+// É uma boa prática declarar as funções no início,
+// antes de usá-las na 'main'.
+
+/**
+ * @brief Simula o movimento da Torre recursivamente.
+ * @param passo_atual O passo atual do movimento (começa em 1).
+ * @param casas_total O número total de casas a mover.
+ */
+void moverTorreRecursivo(int passo_atual, int casas_total);
+
+/**
+ * @brief Simula o movimento do Bispo recursivamente.
+ * @param passo_atual O passo atual do movimento (começa em 1).
+ * @param casas_total O número total de casas a mover.
+ */
+void moverBispoRecursivo(int passo_atual, int casas_total);
+
+/**
+ * @brief Simula o movimento da Rainha recursivamente.
+ * @param passo_atual O passo atual do movimento (começa em 1).
+ * @param casas_total O número total de casas a mover.
+ */
+void moverRainhaRecursivo(int passo_atual, int casas_total);
+
+
+//  Função Principal 
 int main(void) {
 
-    //  1. Movimento da Torre (Usando 'for') 
-
-    // A estrutura 'for' é ideal aqui, pois sabemos exatamente
-    // o número de repetições (5 casas).
-    // O 'for' inicializa, testa a condição e incrementa em uma única linha.
+    //  1. Movimento da Torre (Usando Recursão) 
     int casas_torre = 5;
-    printf(" Movimento da Torre (%d casas para Direita) \n", casas_torre);
-
-    // i = 1: Inicializa o contador (passo 1)
-    // i <= casas_torre: Condição (executa enquanto 'i' for menor ou igual a 5)
-    // i++: Incremento (move para o próximo passo)
-    for (int i = 1; i <= casas_torre; i++) {
-        // Imprime a direção a cada passo
-        printf("Passo %d: Direita\n", i);
-    }
+    printf(" Movimento da Torre (%d casas para Direita) [RECURSIVO] \n", casas_torre);
+    // Inicia a chamada recursiva no passo 1
+    moverTorreRecursivo(1, casas_torre);
 
 
-    //  2. Movimento do Bispo (Usando 'while') 
-
-    // A estrutura 'while' testa a condição ANTES de executar o bloco.
-    // É ótima para quando o número de passos é conhecido, mas
-    // queremos controlar o contador externamente.
+    //  2. Movimento do Bispo (Usando Recursão) 
     int casas_bispo = 5;
-    int passo_bispo = 1; // O contador deve ser inicializado fora do loop.
+    printf("\n Movimento do Bispo (%d casas Diagonal Cima-Direita) [RECURSIVO] \n", casas_bispo);
+    // Inicia a chamada recursiva no passo 1
+    moverBispoRecursivo(1, casas_bispo);
 
-    printf("\n Movimento do Bispo (%d casas na Diagonal Cima-Direita) \n", casas_bispo);
 
-    // Testa a condição: "enquanto o passo atual for menor ou igual a 5"
-    while (passo_bispo <= casas_bispo) {
-        // Imprime a combinação de duas direções
-        printf("Passo %d: Cima, Direita\n", passo_bispo);
+    //  3. Movimento da Rainha (Usando Recursão) 
+    int casas_rainha = 8;
+    printf("\n--- Movimento da Rainha (%d casas para Esquerda) [RECURSIVO] ---\n", casas_rainha);
+    // Inicia a chamada recursiva no passo 1
+    moverRainhaRecursivo(1, casas_rainha);
+
+
+    //  4. Movimento do Bispo (Usando Loops Aninhados V/H) 
+    // Implementação adicional conforme solicitado no desafio.
+    printf("\n--- Movimento do Bispo (%d casas Diagonal Cima-Direita) [LOOPS ANINHADOS] ---\n", casas_bispo);
+    
+    // Loop externo (Vertical): controla o número de passos diagonais
+    for (int v = 1; v <= casas_bispo; v++) {
         
-        // O incremento deve ser feito manualmente dentro do loop.
-        // Se esquecermos esta linha, teremos um loop infinito!
-        passo_bispo++;
+        // Loop interno (Horizontal): executa apenas uma vez por passo vertical
+        // A combinação de 1 passo 'v' e 1 passo 'h' simula
+        // um único passo na diagonal.
+        for (int h = 1; h <= 1; h++) {
+            printf("Passo %d: Cima, Direita\n", v);
+        }
     }
 
 
-    //  3. Movimento da Rainha (Usando 'do-while') 
+    //  5. Movimento do Cavalo (Usando Loops Aninhados Complexos) 
+    // Novo movimento: 2 casas para Cima, 1 casa para Direita.
+    int casas_vertical_cavalo = 2;
+    int casas_horizontal_cavalo = 1;
 
-    // A estrutura 'do-while' executa o bloco de código PELO MENOS UMA VEZ
-    // e só testa a condição no FINAL.
-    int casas_rainha = 8;
-    int passo_rainha = 1; // Inicializa o contador
+    // Controla qual segmento do "L" estamos executando (1=Vertical, 2=Horizontal)
+    int segmento_L = 1; 
 
-    printf("\n Movimento da Rainha (%d casas para Esquerda) \n", casas_rainha);
+    printf("\n Movimento do Cavalo (2 Cima, 1 Direita) [LOOPS ANINHADOS] \n");
 
-    do {
-        // Este bloco é executado primeiro (para o passo 1)
-        printf("Passo %d: Esquerda\n", passo_rainha);
+    // Loop 'while' externo: controla os DOIS segmentos do movimento
+    while (segmento_L <= 2) {
         
-        // Incrementa o contador
-        passo_rainha++;
+        // Condição que decide qual loop aninhado executar
+        if (segmento_L == 1) {
+            // Segmento 1: Mover para Cima
+            // Loop 'for' interno: executa 'casas_vertical_cavalo' (2) vezes
+            for (int passo_v = 1; passo_v <= casas_vertical_cavalo; passo_v++) {
+                printf("Cima\n");
+            }
+        } else {
+            // Segmento 2: Mover para Direita
+            // Loop 'for' interno: executa 'casas_horizontal_cavalo' (1) vez
+            for (int passo_h = 1; passo_h <= casas_horizontal_cavalo; passo_h++) {
+                printf("Direita\n");
+            }
+        }
+        
+        // Avança para o próximo segmento do "L"
+        segmento_L++; 
+    }
 
-    } while (passo_rainha <= casas_rainha); // A condição é testada no final.
-    // O loop continuará enquanto a condição for verdadeira.
 
     return 0; // Indica que o programa terminou com sucesso
+}
+
+
+//  Implementação das Funções Recursivas 
+
+/**
+ * @brief Corpo da função recursiva da Torre.
+ */
+void moverTorreRecursivo(int passo_atual, int casas_total) {
+    // 1. Caso Base (Condição de Parada)
+    // Se o passo atual for maior que o total, a recursão para.
+    if (passo_atual > casas_total) {
+        return; 
+    }
+
+    // 2. Trabalho (Ação)
+    // Imprime o movimento do passo ATUAL
+    printf("Passo %d: Direita\n", passo_atual);
+
+    // 3. Chamada Recursiva (Passo)
+    // Chama a si mesma, mas avançando para o próximo passo.
+    moverTorreRecursivo(passo_atual + 1, casas_total);
+}
+
+/**
+ * @brief Corpo da função recursiva do Bispo.
+ */
+void moverBispoRecursivo(int passo_atual, int casas_total) {
+    // 1. Caso Base (Condição de Parada)
+    if (passo_atual > casas_total) {
+        return;
+    }
+
+    // 2. Trabalho (Ação)
+    printf("Passo %d: Cima, Direita\n", passo_atual);
+
+    // 3. Chamada Recursiva (Passo)
+    moverBispoRecursivo(passo_atual + 1, casas_total);
+}
+
+/**
+ * @brief Corpo da função recursiva da Rainha.
+ */
+void moverRainhaRecursivo(int passo_atual, int casas_total) {
+    // 1. Caso Base (Condição de Parada)
+    if (passo_atual > casas_total) {
+        return;
+    }
+
+    // 2. Trabalho (Ação)
+    printf("Passo %d: Esquerda\n", passo_atual);
+
+    // 3. Chamada Recursiva (Passo)
+    moverRainhaRecursivo(passo_atual + 1, casas_total);
 }
